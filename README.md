@@ -1,30 +1,28 @@
-# MALITOX CODE — Web v1
-
-Web negra y morada inspirada en la distribución de una aplicación de programación con IA: barra lateral, sesiones, chat, editor y descarga de código. Es un diseño original.
+# MALITOX CODE V2 — Multi IA
 
 ## Publicar en GitHub Pages
-
 1. Crea un repositorio público `malitox-code`.
-2. Sube `index.html` y `README.md` a la raíz de `main` (no subas el ZIP sin extraer).
+2. Sube `index.html` a la raíz del repositorio (y este README opcionalmente).
 3. Settings → Pages → Deploy from a branch → main → /(root) → Save.
-4. La URL esperada es `https://TU-USUARIO.github.io/malitox-code/` cuando termine el despliegue.
+4. Abre `https://TU-USUARIO.github.io/malitox-code/`.
 
-## IA real gratuita en tu PC (Ollama)
+## Conectar un modelo local gratis
+1. Instala Ollama desde su web oficial.
+2. Abre PowerShell y ejecuta `ollama pull qwen2.5-coder:7b`.
+3. Para permitir peticiones desde tu sitio de GitHub Pages, configura la variable de entorno `OLLAMA_ORIGINS` con `https://TU-USUARIO.github.io` y reinicia Ollama. Consulta la documentación oficial de Ollama para configurarla en Windows. No abras Ollama a internet.
+4. En MALITOX CODE, abre Configurar IA, elige Ollama, API `http://localhost:11434/v1/chat/completions`, modelo `qwen2.5-coder:7b`, y Conectar.
+5. Si el navegador bloquea peticiones de GitHub Pages a localhost por políticas de red o seguridad, prueba abriendo el archivo `index.html` localmente o usando un proxy privado de confianza. GitHub Pages no ejecuta modelos.
 
-1. Instala Ollama desde su sitio oficial.
-2. Descarga un modelo de código compatible, por ejemplo `ollama pull qwen2.5-coder:7b`. Requiere varios GB y puede ir lento según tu equipo.
-3. Ejecuta Ollama y configura los orígenes CORS autorizados para la web según la documentación de Ollama (variable `OLLAMA_ORIGINS`).
-4. Abre MALITOX CODE → ⚙ IA. URL: `http://localhost:11434/v1/chat/completions`, modelo: `qwen2.5-coder:7b`. No necesita clave en una instalación local estándar.
+## Proveedores online
+Puedes elegir OpenRouter, Groq o una API compatible con OpenAI. Debes usar tu propia cuenta, clave y un identificador de modelo válido. Algunos modelos tienen planes gratuitos con cuotas. Las API pueden bloquear peticiones directas desde navegadores (CORS). Nunca guardes una clave secreta en el código público de GitHub.
 
-**Limitación importante:** según el navegador, GitHub Pages (HTTPS) puede bloquear solicitudes a un servidor HTTP local por CORS, seguridad o acceso a red local. Si eso ocurre, abre `index.html` localmente o usa un servidor HTTPS compatible. La página no contiene un backend de IA y no puede evadir esas restricciones.
+## Qué funciona
+- Conversaciones, historial en localStorage, selector de modelo, peticiones reales al endpoint OpenAI-compatible, editor, extracción de primer bloque de código, copia, descarga y vista previa HTML aislada.
+- La clave de API permanece solo en memoria de la pestaña y se borra al recargar.
 
-## Seguridad
-
-- La clave API se conserva solo en memoria durante la sesión, nunca en localStorage. No introduzcas claves privadas de pago en webs que no controles: el navegador y sus extensiones pueden acceder a ellas.
-- Las sesiones y el código se guardan en `localStorage` de tu navegador. No se sincronizan entre equipos.
-- Las respuestas se generan únicamente cuando hay una API conectada. Sin API, no hay respuestas falsas.
-- El editor permite escribir, copiar, descargar y previsualizar HTML. No ejecuta terminales, plugins ni modifica archivos locales arbitrarios.
-
-## Estado
-
-Versión inicial funcional del frontend. No es una copia de DemonCode ni incluye su backend, su motor de agentes ni sus plugins.
+## Límites
+- No es una IA entrenada por MALITOX: las respuestas provienen del modelo que conectes.
+- No ejecuta código del servidor ni modifica repositorios automáticamente.
+- No incluye claves de pago ni conexiones a servicios sin autorización.
+- El editor es básico y el visor HTML solo sirve para pruebas de páginas no confiables con sandbox.
+- Los modelos locales requieren RAM y CPU/GPU suficientes; 7B puede ser lento en equipos modestos.
